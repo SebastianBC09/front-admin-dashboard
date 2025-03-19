@@ -1,13 +1,16 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
-import '../styles/globals.css';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
+
   return (
     <html lang="es">
       <head>
@@ -22,22 +25,33 @@ export default function RootLayout({
             <Button color="inherit" component={Link} href="/">
               Inicio
             </Button>
-            <Button color="inherit" component={Link} href="/login">
-              Login
-            </Button>
-            <Button color="inherit" component={Link} href="/register">
-              Registro
-            </Button>
-            <Button color="inherit" component={Link} href="/tipos">
-              Tipos
-            </Button>
-            <Button color="inherit" component={Link} href="/propiedades">
-              Propiedades
-            </Button>
+            {!isAuthenticated && (
+              <>
+                <Button color="inherit" component={Link} href="/login">
+                  Login
+                </Button>
+                <Button color="inherit" component={Link} href="/register">
+                  Registro
+                </Button>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <Button color="inherit" component={Link} href="/tipos">
+                  Tipos
+                </Button>
+                <Button color="inherit" component={Link} href="/propiedades">
+                  Propiedades
+                </Button>
+                {/* Agregar un botón de logout si lo deseas */}
+              </>
+            )}
           </Toolbar>
         </AppBar>
         <Container sx={{ mt: 4 }}>{children}</Container>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
