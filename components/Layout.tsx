@@ -25,10 +25,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           mt: 4,
           mb: 8,
           minHeight: 'calc(100vh - 148px)',
-          backgroundColor: 'white',
+          backgroundColor: (theme) => theme.palette.background.paper,
           borderRadius: 2,
           p: 3,
-          boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.05)',
+          boxShadow: (theme) => theme.shadows[3],
         }}
       >
         {children}
@@ -39,7 +39,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           py: 3,
           px: 2,
           mt: 'auto',
-          backgroundColor: (theme) => theme.palette.grey[100],
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[100],
         }}
       >
         <Container maxWidth="lg">
