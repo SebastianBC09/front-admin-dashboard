@@ -8,9 +8,14 @@ export const useHeader = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
 
+  const updateAuth = () => {
+    setIsAuthenticated(!!localStorage.getItem('token'));
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
+    updateAuth();
+    window.addEventListener('storage', updateAuth);
+    return () => window.removeEventListener('storage', updateAuth);
   }, []);
 
   const handleLogout = () => {
