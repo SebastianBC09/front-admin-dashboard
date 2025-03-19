@@ -17,6 +17,7 @@ import {
   MenuItem,
   Divider,
   useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -45,6 +46,7 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
     handleCloseMenu,
     toggleDrawer,
   } = useHeader();
+  const theme = useTheme();
 
   const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('md'));
 
@@ -63,8 +65,8 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
 
   const drawerContent = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
-      <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
-        <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
+      <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Typography variant="h6" sx={{ color: theme.palette.primary.main, fontWeight: 'bold' }}>
           Fortex
         </Typography>
       </Box>
@@ -78,10 +80,22 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
             sx={{
               borderRadius: '0 20px 20px 0',
               mx: 1,
-              '&:hover': { backgroundColor: 'rgba(25, 118, 210, 0.08)' },
+              color: theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
+              '&:hover': {
+                backgroundColor:
+                  theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.1)'
+                    : 'rgba(25, 118, 210, 0.08)',
+              },
             }}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemIcon
+              sx={{
+                color: theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
+              }}
+            >
+              {item.icon}
+            </ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
