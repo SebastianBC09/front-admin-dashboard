@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, List, ListItem, ListItemText, CircularProgress } from '@mui/material';
 import api from '../../services/api';
