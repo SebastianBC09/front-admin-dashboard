@@ -15,3 +15,17 @@ export interface TypeData {
 export interface GetTypesResponse {
   types: TypeData[];
 }
+
+export interface PropertyData {
+  id: string;
+  name: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type Property = Omit<PropertyData, 'createdAt' | 'updatedAt' >
+
+export interface GetPropertiesResponse {
+  properties: PropertyData[];
+}
