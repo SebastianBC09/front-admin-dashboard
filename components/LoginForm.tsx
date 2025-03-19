@@ -4,7 +4,7 @@ import { IconButton, InputAdornment, TextField, Button, Alert, Stack, Paper, Box
 import { Email as EmailIcon, Lock as LockIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
 import { useLogin } from '@/hooks/useLogin';
-import AuthFormWrapper from './AuthFormWrapper';
+import Wrapper from './Wrapper';
 
 const LoginForm: React.FC = () => {
   const {
@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
   } = useLogin();
 
   return (
-    <AuthFormWrapper>
+    <Wrapper maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3, width: '100%', maxWidth: 450, backgroundColor: 'background.paper' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
           <Box sx={{ backgroundColor: 'primary.main', color: 'white', width: 60, height: 60, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2, fontSize: '1.5rem', fontWeight: 'bold' }}>
@@ -101,7 +101,7 @@ const LoginForm: React.FC = () => {
           </Stack>
         </Box>
       </Paper>
-    </AuthFormWrapper>
+    </Wrapper>
   );
 };
 

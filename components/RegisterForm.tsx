@@ -4,7 +4,7 @@ import { IconButton, InputAdornment, TextField, Button, Alert, Divider, Paper, B
 import { Person as PersonIcon, Email as EmailIcon, Lock as LockIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
 import { useRegister } from '@/hooks/useRegister';
-import AuthFormWrapper from './AuthFormWrapper';
+import Wrapper from './Wrapper';
 
 const RegisterForm: React.FC = () => {
   const { form, errors, serverError, loading, handleChange, handleRegister } = useRegister();
@@ -12,7 +12,7 @@ const RegisterForm: React.FC = () => {
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   return (
-    <AuthFormWrapper>
+    <Wrapper maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3, width: '100%', maxWidth: 450, backgroundColor: 'background.paper' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
           <Typography variant="h5" component="h1" fontWeight={600}>
@@ -119,7 +119,7 @@ const RegisterForm: React.FC = () => {
           </Box>
         </Box>
       </Paper>
-    </AuthFormWrapper>
+    </Wrapper>
   );
 };
 
