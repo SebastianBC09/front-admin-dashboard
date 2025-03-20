@@ -18,6 +18,8 @@ import {
   Zoom,
   Tooltip,
   TextField,
+  Chip,
+  Button,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -33,6 +35,10 @@ import { useTiposActions } from '@/hooks/useTiposActions';
 import { useTipos } from '@/hooks/useTipos';
 import { TypeData } from '@/interfaces/types';
 
+const formatDate = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  return date.toLocaleDateString();
+};
 
 const TiposClient: React.FC = () => {
   const {
@@ -71,11 +77,18 @@ const TiposClient: React.FC = () => {
             Tipos
           </Typography>
         </Box>
-        <Tooltip title="Añadir nuevo tipo">
-          <IconButton color="primary" onClick={handleOpenForm}>
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          sx={{
+            borderRadius: '8px',
+            boxShadow: 2,
+            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+          }}
+          onClick={handleOpenForm}
+        >
+          Nuevo Tipo
+        </Button>
       </Box>
       <Paper sx={{ mb: 3, p: 2, borderRadius: 2 }}>
         <TextField
@@ -95,6 +108,11 @@ const TiposClient: React.FC = () => {
           sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
         />
       </Paper>
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
       <Zoom in timeout={500}>
         <Paper sx={{ borderRadius: 2, overflow: 'hidden', boxShadow: 2 }}>
           <TableContainer>
@@ -104,6 +122,7 @@ const TiposClient: React.FC = () => {
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Nombre</TableCell>
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Descripción</TableCell>
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Propiedades</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Creación</TableCell>
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
                     Acciones
                   </TableCell>
@@ -113,6 +132,9 @@ const TiposClient: React.FC = () => {
                 {loading
                   ? Array.from(new Array(5)).map((_, index) => (
                       <TableRow key={index}>
+                        <TableCell>
+                          <Typography variant="body2">Cargando...</Typography>
+                        </TableCell>
                         <TableCell>
                           <Typography variant="body2">Cargando...</Typography>
                         </TableCell>
@@ -136,9 +158,7 @@ const TiposClient: React.FC = () => {
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {tipo.properties.length > 0 ? (
                               tipo.properties.map((prop) => (
-                                <Typography key={prop.propertyId} variant="body2" color="text.secondary">
-                                  {prop.propertyId}
-                                </Typography>
+                                <Chip key={prop.propertyId} label={prop.propertyId} size="small" />
                               ))
                             ) : (
                               <Typography variant="body2" color="text.secondary">
@@ -147,23 +167,30 @@ const TiposClient: React.FC = () => {
                             )}
                           </Box>
                         </TableCell>
+                        <TableCell>
+                          <Typography variant="body2" color="text.secondary">
+                            {formatDate(tipo.createdAt)}
+                          </Typography>
+                        </TableCell>
                         <TableCell align="right">
-                          <Tooltip title="Editar">
-                            <IconButton color="primary">
-                              <EditIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="Eliminar">
-                            <IconButton onClick={() => requestDelete(tipo.id)} color="error">
-                              <DeleteIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
+                          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                            <Tooltip title="Editar">
+                              <IconButton color="primary">
+                                <EditIcon fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Eliminar">
+                              <IconButton onClick={() => requestDelete(tipo.id)} color="error">
+                                <DeleteIcon fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                          </Box>
                         </TableCell>
                       </TableRow>
                     ))
                   : (
                     <TableRow>
-                      <TableCell colSpan={4} align="center" sx={{ py: 4 }}>
+                      <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
                         <Typography variant="body1" color="text.secondary">
                           No se encontraron tipos
                         </Typography>
