@@ -51,8 +51,12 @@ const TypesForm: React.FC<TypesFormProps> = ({ open, onClose, onSuccess }) => {
       resetForm();
       if (onSuccess) onSuccess();
       onClose();
-    } catch (err: any) {
-      setError('Error al crear el tipo');
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+          setError('Error al crear el tipo');
+        }
     } finally {
       setLoading(false);
     }
