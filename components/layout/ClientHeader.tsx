@@ -29,7 +29,7 @@ import {
   Brightness4,
   Brightness7,
 } from '@mui/icons-material';
-import { useHeader } from '../hooks/useHeader';
+import { useHeader } from '@/hooks/useHeader';
 
 interface ClientHeaderProps {
   onToggleDarkMode: () => void;

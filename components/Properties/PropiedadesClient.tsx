@@ -30,7 +30,7 @@ import {
 import ConfirmationDialog from '../UI/ConfirmationDialog';
 import PropertiesForm from './PropertiesForm';
 import Wrapper from '../layout/Wrapper';
-import { usePropiedadesActions } from '@/hooks/usePropiedadesActions';
+import { usePropiedadesActions } from '@/hooks/Properties/usePropiedadesActions';
 import { usePropiedades } from '@/hooks/Properties/usePropiedades';
 import { PropertyData } from '@/interfaces/types';
 

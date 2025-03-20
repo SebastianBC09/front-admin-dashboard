@@ -3,8 +3,9 @@ import React from 'react';
 import { IconButton, InputAdornment, TextField, Button, Alert, Divider, Paper, Box, Typography, CircularProgress } from '@mui/material';
 import { Person as PersonIcon, Email as EmailIcon, Lock as LockIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
-import { useRegister } from '@/hooks/useRegister';
-import Wrapper from './Wrapper';
+import Wrapper from '../layout/Wrapper';
+import { useRegister } from '@/hooks/auth/useRegister';
+
 
 const RegisterForm: React.FC = () => {
   const { form, errors, serverError, loading, handleChange, handleRegister } = useRegister();

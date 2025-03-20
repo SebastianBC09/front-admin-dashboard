@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useMemo } from 'react';
 import { ThemeProvider, CssBaseline, Container, Box, Typography } from '@mui/material';
-import { getTheme } from '../../constants/theme';
+import { getTheme } from '@/constants/theme';
 import ClientHeader from './ClientHeader';
 
 interface LayoutProps {

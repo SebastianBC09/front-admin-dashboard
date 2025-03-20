@@ -28,11 +28,11 @@ import {
   Search as SearchIcon,
   Category as CategoryIcon,
 } from '@mui/icons-material';
-import ConfirmationDialog from './UI/ConfirmationDialog';
+import ConfirmationDialog from '../UI/ConfirmationDialog';
 import TypeForm from './TypeForm';
-import Wrapper from './layout/Wrapper';
-import { useTiposActions } from '@/hooks/useTiposActions';
+import Wrapper from '../layout/Wrapper';
 import { useTipos } from '@/hooks/Tipos/useTipos';
+import { useTiposActions } from '@/hooks/Tipos/useTiposActions';
 import { TypeData } from '@/interfaces/types';
 
 const formatDate = (isoDate: string): string => {

@@ -3,8 +3,8 @@ import React from 'react';
 import { IconButton, InputAdornment, TextField, Button, Alert, Stack, Paper, Box, Typography, CircularProgress } from '@mui/material';
 import { Email as EmailIcon, Lock as LockIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
-import { useLogin } from '@/hooks/useLogin';
-import Wrapper from './Wrapper';
+import Wrapper from '../layout/Wrapper';
+import { useLogin } from '@/hooks/auth/useLogin';
 
 const LoginForm: React.FC = () => {
   const {

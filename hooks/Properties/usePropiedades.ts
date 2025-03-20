@@ -11,13 +11,13 @@ export function usePropiedades() {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
-  const [notification, setNotification] = useState({
-    open: false,
-    message: '',
-    severity: 'success' as 'success' | 'error',
-  });
+  // const [notification, setNotification] = useState({
+  //   open: false,
+  //   message: '',
+  //   severity: 'success' as 'success' | 'error',
+  // });
 
-    const handleCloseNotification = () => setNotification((prev) => ({ ...prev, open: false }));
+  //   const handleCloseNotification = () => setNotification((prev) => ({ ...prev, open: false }));
 
   const fetchPropiedades = useCallback(async () => {
     setLoading(true);

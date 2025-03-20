@@ -2,10 +2,9 @@
 'use client'
 import { useState } from 'react';
 import api from '@/services/api';
-import { useTipos } from './Tipos/useTipos';
+import { useTipos } from './useTipos';
 
 export const useTiposActions = () => {
-
   const { refetch } = useTipos();
   const [openForm, setOpenForm] = useState<boolean>(false);
   const [notification, setNotification] = useState({
