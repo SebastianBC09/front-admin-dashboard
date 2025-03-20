@@ -26,8 +26,8 @@ Frontend para Fortex Design, una aplicación para la administración de tipos y 
 9. [Componentes Principales](#componentes-principales)
 10. [Enrutamiento y Gestión de Estados](#enrutamiento-y-gestión-de-estados)
 11. [Integración con el Backend](#integración-con-el-backend)
-12. [Autor](#autor)
-13. [Licencia](#licencia)
+12. [Autor](#-autor)
+13. [Licencia](#-licencia)
 
 ---
 
