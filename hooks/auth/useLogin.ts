@@ -23,8 +23,12 @@ export const useLogin = () => {
       localStorage.setItem('token', token);
       setUser(user);
       router.push('/');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Error en el login. Verifica tus credenciales.');
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Error en el login. Verifica tus credenciales.');
+      }
     } finally {
       setLoading(false);
     }

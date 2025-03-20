@@ -17,7 +17,8 @@ import {
   MenuItem,
   Divider,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Theme
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -48,7 +49,7 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
   const { isAuthenticated, user } = useAuthStore();
   const theme = useTheme();
 
-  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const drawerItems = [
     { text: 'Inicio', icon: <HomeIcon />, href: '/' },

@@ -40,8 +40,12 @@ const PropertiesForm: React.FC<PropertiesFormProps> = ({ open, onClose, onSucces
       resetForm();
       if (onSuccess) onSuccess();
       onClose();
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Error al crear la propiedad');
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Error al crear la propiedad');
+      }
     } finally {
       setLoading(false);
     }
