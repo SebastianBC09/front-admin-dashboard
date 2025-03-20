@@ -1,7 +1,7 @@
 'use client'
 import { Card, CardHeader, CardContent, CardActions, Typography, Button, Divider } from '@mui/material';
 import Link from 'next/link';
-import { useHeader } from '@/hooks/useHeader';
+import { useAuthStore } from '@/store/useAuthStore';
 
 interface FeatureCardProps {
   title: string;
@@ -22,7 +22,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   authButtonText = "Iniciar sesión para acceder",
   authButtonDisabledText = "Sesión iniciada",
 }) => {
-  const { isAuthenticated } = useHeader();
+  const { isAuthenticated } = useAuthStore();
 
   let actionButton = null;
   if (isAuthenticated) {

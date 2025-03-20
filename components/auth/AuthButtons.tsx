@@ -2,10 +2,10 @@
 import React from 'react';
 import { Button, Stack, useTheme } from '@mui/material';
 import Link from 'next/link';
-import { useHeader } from '@/hooks/useHeader';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const AuthButtons: React.FC = () => {
-  const { isAuthenticated } = useHeader();
+  const { isAuthenticated } = useAuthStore();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 

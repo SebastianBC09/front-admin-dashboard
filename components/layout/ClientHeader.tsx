@@ -30,7 +30,7 @@ import {
   Brightness7,
 } from '@mui/icons-material';
 import { useHeader } from '@/hooks/useHeader';
-
+import { useAuthStore } from '@/store/useAuthStore';
 interface ClientHeaderProps {
   onToggleDarkMode: () => void;
   currentMode: 'light' | 'dark';
@@ -38,7 +38,6 @@ interface ClientHeaderProps {
 
 const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMode }) => {
   const {
-    isAuthenticated,
     drawerOpen,
     anchorEl,
     handleLogout,
@@ -46,6 +45,7 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
     handleCloseMenu,
     toggleDrawer,
   } = useHeader();
+  const { isAuthenticated, user } = useAuthStore();
   const theme = useTheme();
 
   const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('md'));
@@ -186,11 +186,10 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                   >
+                    <MenuItem disabled>{user?.name}</MenuItem>
                     <MenuItem onClick={handleLogout}>
-                      <ListItemIcon>
-                        <LogoutIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText>Cerrar Sesión</ListItemText>
+                      <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+                      Cerrar Sesión
                     </MenuItem>
                   </Menu>
                 </Box>

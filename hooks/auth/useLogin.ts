@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import api from '@/services/api';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export const useLogin = () => {
   const [email, setEmail] = useState<string>('');
@@ -10,6 +11,7 @@ export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
+  const { setUser } = useAuthStore();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,8 +19,9 @@ export const useLogin = () => {
     setLoading(true);
     try {
       const response = await api.post('/auth/login', { email, password });
-      const { token } = response.data;
-      localStorage.setItem('token', token);
+      const { token, user } = response.data;
+      sessionStorage.setItem('token', token);
+      setUser(user);
       router.push('/');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Error en el login. Verifica tus credenciales.');
