@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { Paper, Box, Typography } from '@mui/material';
-import AuthButtons from './AuthButtons';
+import AuthButtons from '../auth/AuthButtons';
 
 const Hero: React.FC = () => {
   return (

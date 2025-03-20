@@ -1,4 +1,4 @@
-import PropiedadesClient from '@/components/PropiedadesClient';
+import PropiedadesClient from '@/components/Properties/PropiedadesClient';
 
 export default function PropiedadesPage() {
   return <PropiedadesClient />;

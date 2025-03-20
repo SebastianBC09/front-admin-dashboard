@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import api from '@/services/api';
-import { usePropiedades } from './usePropiedades';
+import { usePropiedades } from './Properties/usePropiedades';
 
 export const usePropiedadesActions = () => {
   const { refetch } = usePropiedades();

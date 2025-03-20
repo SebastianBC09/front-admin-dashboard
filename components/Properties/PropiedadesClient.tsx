@@ -18,7 +18,6 @@ import {
   Zoom,
   Tooltip,
   TextField,
-  Chip,
   Button,
 } from '@mui/material';
 import {
@@ -26,23 +25,23 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   Search as SearchIcon,
-  Category as CategoryIcon,
+  ListAlt as ListAltIcon,
 } from '@mui/icons-material';
-import ConfirmationDialog from './ConfirmationDialog';
-import TypeForm from './TypeForm';
-import Wrapper from './Wrapper';
-import { useTiposActions } from '@/hooks/useTiposActions';
-import { useTipos } from '@/hooks/useTipos';
-import { TypeData } from '@/interfaces/types';
+import ConfirmationDialog from '../UI/ConfirmationDialog';
+import PropertiesForm from './PropertiesForm';
+import Wrapper from '../layout/Wrapper';
+import { usePropiedadesActions } from '@/hooks/usePropiedadesActions';
+import { usePropiedades } from '@/hooks/Properties/usePropiedades';
+import { PropertyData } from '@/interfaces/types';
 
 const formatDate = (isoDate: string): string => {
   const date = new Date(isoDate);
   return date.toLocaleDateString();
 };
 
-const TiposClient: React.FC = () => {
+const PropiedadesClient: React.FC = () => {
   const {
-    tipos,
+    propiedades,
     loading,
     error,
     searchTerm,
@@ -53,7 +52,7 @@ const TiposClient: React.FC = () => {
     handleChangeRowsPerPage,
     refetch,
     total,
-  } = useTipos();
+  } = usePropiedades();
 
   const {
     openForm,
@@ -65,35 +64,34 @@ const TiposClient: React.FC = () => {
     confirmDialogOpen,
     confirmDelete,
     cancelDelete,
-  } = useTiposActions();
-
+  } = usePropiedadesActions();
 
   return (
     <Wrapper maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
       <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <CategoryIcon sx={{ fontSize: 28, mr: 1, color: 'primary.main' }} />
+          <ListAltIcon sx={{ fontSize: 28, mr: 1, color: 'primary.main' }} />
           <Typography variant="h4" component="h1" fontWeight={500}>
-            Tipos
+            Propiedades
           </Typography>
         </Box>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={handleOpenForm}
           sx={{
             borderRadius: '8px',
             boxShadow: 2,
             background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
           }}
-          onClick={handleOpenForm}
         >
-          Nuevo Tipo
+          Nueva Propiedad
         </Button>
       </Box>
       <Paper sx={{ mb: 3, p: 2, borderRadius: 2 }}>
         <TextField
           fullWidth
-          placeholder="Buscar tipos..."
+          placeholder="Buscar propiedades..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           slotProps={{
@@ -120,8 +118,7 @@ const TiposClient: React.FC = () => {
               <TableHead>
                 <TableRow sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Nombre</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Descripción</TableCell>
-                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Propiedades</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Tipo</TableCell>
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Creación</TableCell>
                   <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
                     Acciones
@@ -141,58 +138,40 @@ const TiposClient: React.FC = () => {
                         <TableCell>
                           <Typography variant="body2">Cargando...</Typography>
                         </TableCell>
-                        <TableCell>
-                          <Typography variant="body2">Cargando...</Typography>
-                        </TableCell>
                         <TableCell align="right">
                           <Typography variant="body2">Cargando...</Typography>
                         </TableCell>
                       </TableRow>
                     ))
-                  : tipos.length > 0
-                  ? tipos.map((tipo: TypeData) => (
-                      <TableRow key={tipo.id} hover>
-                        <TableCell sx={{ fontWeight: 500 }}>{tipo.name}</TableCell>
-                        <TableCell>{tipo.description}</TableCell>
-                        <TableCell>
-                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {tipo.properties.length > 0 ? (
-                              tipo.properties.map((prop) => (
-                                <Chip key={prop.propertyId} label={prop.propertyId} size="small" />
-                              ))
-                            ) : (
-                              <Typography variant="body2" color="text.secondary">
-                                Sin propiedades
-                              </Typography>
-                            )}
-                          </Box>
-                        </TableCell>
+                  : propiedades.length > 0
+                  ? propiedades.map((propiedad: PropertyData) => (
+                      <TableRow key={propiedad.id} hover>
+                        <TableCell sx={{ fontWeight: 500 }}>{propiedad.name}</TableCell>
+                        <TableCell>{propiedad.type}</TableCell>
                         <TableCell>
                           <Typography variant="body2" color="text.secondary">
-                            {formatDate(tipo.createdAt)}
+                            {formatDate(propiedad.createdAt)}
                           </Typography>
                         </TableCell>
                         <TableCell align="right">
-                          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-                            <Tooltip title="Editar">
-                              <IconButton color="primary">
-                                <EditIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Eliminar">
-                              <IconButton onClick={() => requestDelete(tipo.id)} color="error">
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          </Box>
+                          <Tooltip title="Editar">
+                            <IconButton color="primary">
+                              <EditIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Eliminar">
+                            <IconButton onClick={() => requestDelete(propiedad.id)} color="error">
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
                         </TableCell>
                       </TableRow>
                     ))
                   : (
                     <TableRow>
-                      <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                      <TableCell colSpan={3} align="center" sx={{ py: 4 }}>
                         <Typography variant="body1" color="text.secondary">
-                          No se encontraron tipos
+                          No se encontraron propiedades
                         </Typography>
                       </TableCell>
                     </TableRow>
@@ -223,11 +202,11 @@ const TiposClient: React.FC = () => {
           {notification.message}
         </Alert>
       </Snackbar>
-      <TypeForm open={openForm} onClose={handleCloseForm} onSuccess={refetch} />
+      <PropertiesForm open={openForm} onClose={handleCloseForm} onSuccess={refetch} />
       <ConfirmationDialog
         open={confirmDialogOpen}
         title="Confirmar eliminación"
-        message="¿Está seguro de que desea eliminar este tipo?"
+        message="¿Está seguro de que desea eliminar esta propiedad?"
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
       />
@@ -235,4 +214,4 @@ const TiposClient: React.FC = () => {
   );
 };
 
-export default TiposClient;
+export default PropiedadesClient;

@@ -1,9 +1,9 @@
 import { Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import FeatureCard from '@/components/FeatureCard';
-import Hero from '@/components/Hero';
+import FeatureCard from '@/components/UI/FeatureCard';
+import Hero from '@/components/UI/Hero';
 import { Category as CategoryIcon, FormatListBulleted as ListIcon, Security as SecurityIcon } from '@mui/icons-material';
-import Wrapper from '@/components/Wrapper';
+import Wrapper from '@/components/layout/Wrapper';
 
 export default function HomePage() {
   return (

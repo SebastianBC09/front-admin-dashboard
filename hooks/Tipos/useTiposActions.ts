@@ -2,7 +2,7 @@
 'use client'
 import { useState } from 'react';
 import api from '@/services/api';
-import { useTipos } from './useTipos';
+import { useTipos } from './Tipos/useTipos';
 
 export const useTiposActions = () => {
 
