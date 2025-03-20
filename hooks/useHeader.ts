@@ -22,7 +22,7 @@ export const useHeader = () => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     logout();
     setAnchorEl(null);
     router.push('/login');

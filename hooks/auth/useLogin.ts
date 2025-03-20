@@ -20,7 +20,7 @@ export const useLogin = () => {
     try {
       const response = await api.post('/auth/login', { email, password });
       const { token, user } = response.data;
-      sessionStorage.setItem('token', token);
+      localStorage.setItem('token', token);
       setUser(user);
       router.push('/');
     } catch (err: any) {
