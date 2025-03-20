@@ -26,9 +26,8 @@ Frontend para Fortex Design, una aplicación para la administración de tipos y 
 9. [Componentes Principales](#componentes-principales)
 10. [Enrutamiento y Gestión de Estados](#enrutamiento-y-gestión-de-estados)
 11. [Integración con el Backend](#integración-con-el-backend)
-12. [Despliegue](#despliegue)
-13. [Autor](#autor)
-14. [Licencia](#licencia)
+12. [Autor](#autor)
+13. [Licencia](#licencia)
 
 ---
 
@@ -78,13 +77,13 @@ Para acceder y hacer pruebas en la aplicación, se pueden usar estas siguientes 
 ## Características Principales
 
 ### Autenticación y Autorización
-- **Sistema de autenticación completo**: Registro, inicio de sesión, recuperación de contraseña
+- **Sistema de autenticación completo**: Registro e inicio de sesión
 - **Autorización basada en roles**: Diferentes interfaces y permisos para roles ADMIN y USER
-- **Gestión de tokens JWT**: Almacenamiento seguro y renovación automática
+- **Gestión de tokens JWT**: Almacenamiento seguro.
 
 ### Gestión de Tipos
 - **Visualización en tabla**: Listado completo con paginación, ordenamiento y filtrado
-- **Operaciones CRUD**: Creación, lectura, actualización y eliminación de tipos
+- **Operaciones CRUD**: Creación y lectura de tipos
 - **Asociación de propiedades**: Asignación múltiple de propiedades a cada tipo
 
 ### Gestión de Propiedades
@@ -175,30 +174,25 @@ frontend/
 ├── app/                         # Páginas y rutas de Next.js
 │   ├── page.tsx                 # Página principal (Home)
 │   ├── layout.tsx               # Layout principal con proveedores
-│   ├── auth/                    # Páginas de autenticación
-│   │   ├── login/               # Página de inicio de sesión
-│   │   └── register/            # Página de registro
-│   ├── dashboard/               # Página de dashboard principal
+│   ├── login/                   # Página de inicio de sesión
+│   │   └── page.tsx
+│   ├── register/                # Página de registro
+│   │   └── page.tsx
 │   ├── tipos/                   # Páginas para gestión de tipos
-│   │   ├── page.tsx             # Página principal de tipos
-│   │   └── [id]/                # Página de detalle de tipo
+│   │   └── page.tsx             # Página principal de tipos
 │   └── propiedades/             # Páginas para gestión de propiedades
-│       ├── page.tsx             # Página principal de propiedades
-│       └── [id]/                # Página de detalle de propiedad
+│       └── page.tsx             # Página principal de propiedades
 ├── components/                  # Componentes reutilizables
-│   ├── common/                  # Componentes de uso general
-│   │   ├── Header.tsx           # Cabecera de la aplicación
-│   │   ├── Sidebar.tsx          # Barra lateral de navegación
-│   │   ├── PageWrapper.tsx      # Contenedor de página con transiciones
-│   │   └── Loader.tsx           # Componente de carga
+│   ├── Layout/                  # Componentes de uso general
+│   │   ├── ClientHeader.tsx     # Cabecera de la aplicación
+│   │   └── Wrapper.tsx          # Contenedor de página con transiciones
 │   ├── tipos/                   # Componentes para gestión de tipos
 │   │   ├── TiposClient.tsx      # Cliente para listado de tipos
-│   │   ├── TipoForm.tsx         # Formulario para crear/editar tipos
-│   │   └── TipoDetail.tsx       # Vista detallada de un tipo
-│   └── propiedades/             # Componentes para gestión de propiedades
-│       ├── PropiedadesClient.tsx # Cliente para listado de propiedades
-│       ├── PropiedadForm.tsx    # Formulario para crear/editar propiedades
-│       └── PropiedadDetail.tsx  # Vista detallada de una propiedad
+│   │   └── TypeForm.tsx         # Formulario para crear tipos
+│   ├── propiedades/             # Componentes para gestión de propiedades
+│   |   ├── PropiedadesClient.tsx # Cliente para listado de propiedades
+│   |   └── PropertiesForm.tsx    # Formulario para crear propiedades
+│   └── UI/                       # Componentes Reutilizables
 ├── hooks/                       # Custom hooks
 │   ├── useAuth.ts               # Hook para autenticación
 │   ├── useTipos.ts              # Hook para obtener tipos
@@ -206,17 +200,12 @@ frontend/
 │   ├── useTiposActions.ts       # Hook para acciones de tipos
 │   └── usePropiedadesActions.ts # Hook para acciones de propiedades
 ├── interfaces/                  # Interfaces y tipos
-│   ├── auth.ts                  # Interfaces de autenticación
-│   ├── tipos.ts                 # Interfaces de tipos
-│   └── propiedades.ts           # Interfaces de propiedades
+│   └── types.ts                 # Interfaces de propiedades
 ├── services/                    # Servicios de API
-│   ├── api.ts                   # Configuración base de Axios
-│   ├── authService.ts           # Servicios de autenticación
-│   ├── tiposService.ts          # Servicios para tipos
-│   └── propiedadesService.ts    # Servicios para propiedades
-├── utils/                       # Utilidades
-│   ├── theme.ts                 # Configuración de temas
-│   └── formatters.ts            # Funciones de formato
+│   └── api.ts                   # Configuración base de Axios
+├── store/                       # Configuracion del store con Zustand
+├── constants/                   # Valores constantes
+│   └── theme.ts                 # Configuración de temas
 ├── public/                      # Recursos estáticos
 │   ├── images/                  # Imágenes
 │   └── favicon.ico              # Favicon
@@ -267,7 +256,6 @@ frontend/
 | `npm run dev` | Inicia el servidor de desarrollo en `http://localhost:3000` |
 | `npm run build` | Compila la aplicación para producción |
 | `npm run start` | Inicia la aplicación compilada en modo producción |
-| `npm runlocalStorage lint` | Ejecuta el linter para verificar la calidad del código |
 
 ---
 
@@ -282,7 +270,6 @@ frontend/
 | `PropiedadesClient` | Cliente para gestión de propiedades | `initialData`, `onSearch`, `onFilter` | `/components/propiedades/PropiedadesClient.tsx` |
 | `PropiedadForm` | Formulario para crear/editar propiedades | `initialData`, `onSubmit`, `onCancel` | `/components/propiedades/PropiedadForm.tsx` |
 | `ThemeProvider` | Proveedor de tema (claro/oscuro) | `children`, `initialTheme` | `/app/layout.tsx` |
-| `AuthProvider` | Proveedor de autenticación | `children` | `/app/layout.tsx` |
 
 ---
 
@@ -294,20 +281,17 @@ El proyecto utiliza el sistema de enrutamiento de Next.js App Router, que propor
 
 - **Rutas basadas en archivos**: La estructura de carpetas define las rutas
 - **Layouts anidados**: Reutilización de componentes de layout
-- **Carga y error por ruta**: Gestión granular de estados de carga y error
-- **Parámetros dinámicos**: Rutas con parámetros como `/tipos/[id]`
 
 ### Gestión de Estados
 
 La gestión de estados se realiza principalmente a través de:
 
 1. **Custom Hooks**: Encapsulan lógica de negocio y estado
-   - `useAuth`: Gestión de autenticación y roles
    - `useTipos` y `usePropiedades`: Obtención y cache de datos
    - `useTiposActions` y `usePropiedadesActions`: Acciones CRUD
 
-2. **Context API**: Para estados globales como:
-   - Tema (claro/oscuro)
+2. **Zustand**: Para estados globales como:
+   - Autenticacion y actualizacion de la UI
    - Estado de autenticación
    - Notificaciones del sistema
 
@@ -357,44 +341,6 @@ api.interceptors.response.use(
 
 export default api;
 ```
-
-### Servicios Principales
-
-- **authService**: Manejo de registro, login, logout y verificación de tokens
-- **tiposService**: Operaciones CRUD para tipos
-- **propiedadesService**: Operaciones CRUD para propiedades
-
-Cada servicio proporciona métodos para interactuar con el backend de manera consistente.
-
----
-
-## Despliegue
-
-El frontend se despliega utilizando Vercel, aprovechando su integración nativa con Next.js:
-
-### Paso a Paso
-
-1. **Configura repositorio en Vercel:**
-   - Conecta tu repositorio de GitHub/GitLab/Bitbucket a Vercel
-   - Selecciona el proyecto y configura las variables de entorno
-
-2. **Configuración de producción:**
-   ```
-   Framework Preset: Next.js
-   Build Command: npm run build
-   Output Directory: .next
-   ```
-
-3. **Variables de entorno:**
-   - `NEXT_PUBLIC_API_URL`: URL de la API en producción
-   - `NEXT_PUBLIC_APP_NAME`: Nombre de la aplicación
-
-4. **Dominios personalizados:**
-   - Configura un dominio personalizado en la configuración del proyecto en Vercel
-   - Configura los registros DNS necesarios
-
-5. **Despliegue automático:**
-   - Cada push a la rama principal desencadena un nuevo despliegue
 
 ---
 
