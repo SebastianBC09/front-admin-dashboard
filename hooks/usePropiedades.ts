@@ -8,6 +8,16 @@ export function usePropiedades() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success' as 'success' | 'error',
+  });
+
+    const handleCloseNotification = () => setNotification((prev) => ({ ...prev, open: false }));
 
   const fetchPropiedades = useCallback(async () => {
     setLoading(true);
@@ -31,12 +41,28 @@ export function usePropiedades() {
     prop.type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const paginatedPropiedades = filteredPropiedades.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return {
-    propiedades: filteredPropiedades,
+    propiedades: paginatedPropiedades,
     loading,
     error,
     searchTerm,
     setSearchTerm,
+    page,
+    rowsPerPage,
+    handleChangePage,
+    handleChangeRowsPerPage,
     refetch: fetchPropiedades,
+    total: filteredPropiedades.length
   };
 }
