@@ -46,23 +46,28 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
     handleCloseMenu,
     toggleDrawer,
   } = useHeader();
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, logout} = useAuthStore();
   const theme = useTheme();
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const drawerItems = [
-    { text: 'Inicio', icon: <HomeIcon />, href: '/' },
-    ...(isAuthenticated
-      ? [
-          { text: 'Tipos', icon: <CategoryIcon />, href: '/tipos' },
-          { text: 'Propiedades', icon: <ListAltIcon />, href: '/propiedades' },
-        ]
-      : [
-          { text: 'Iniciar Sesión', icon: <AccountCircle />, href: '/login' },
-          { text: 'Registro', icon: <AccountCircle />, href: '/register' },
-        ]),
-  ];
+      { text: 'Inicio', icon: <HomeIcon />, href: '/' },
+      ...(isAuthenticated
+        ? [
+            { text: 'Tipos', icon: <CategoryIcon />, href: '/tipos' },
+            { text: 'Propiedades', icon: <ListAltIcon />, href: '/propiedades' },
+            { text: 'Cerrar Sesión', icon: <LogoutIcon />, onClick: () => {
+              logout();
+              localStorage.removeItem('token');
+              toggleDrawer();
+            } },
+          ]
+        : [
+            { text: 'Iniciar Sesión', icon: <AccountCircle />, href: '/login' },
+            { text: 'Registro', icon: <AccountCircle />, href: '/register' },
+          ]),
+    ];
 
   const drawerContent = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
@@ -73,33 +78,37 @@ const ClientHeader: React.FC<ClientHeaderProps> = ({ onToggleDarkMode, currentMo
       </Box>
       <Divider />
       <List>
-        {drawerItems.map((item) => (
-          <ListItem
-            key={item.text}
-            component={Link}
-            href={item.href}
-            sx={{
-              borderRadius: '0 20px 20px 0',
-              mx: 1,
-              color: theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
-              '&:hover': {
-                backgroundColor:
-                  theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.1)'
-                    : 'rgba(25, 118, 210, 0.08)',
-              },
-            }}
-          >
-            <ListItemIcon
+        {drawerItems.map((item) => {
+          const Component = item.href ? Link : 'div';
+          return (
+            <ListItem
+              key={item.text}
+              component={Component}
+              {...(item.href ? { href: item.href } : {})}
+              onClick={item.onClick}
               sx={{
+                borderRadius: '0 20px 20px 0',
+                mx: 1,
                 color: theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
+                '&:hover': {
+                  backgroundColor:
+                    theme.palette.mode === 'dark'
+                      ? 'rgba(255, 255, 255, 0.1)'
+                      : 'rgba(25, 118, 210, 0.08)',
+                },
               }}
             >
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+              <ListItemIcon
+                sx={{
+                  color: theme.palette.mode === 'dark' ? theme.palette.common.white : 'inherit',
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );
