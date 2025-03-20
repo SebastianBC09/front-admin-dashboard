@@ -344,17 +344,18 @@ export default api;
 
 ---
 
-## Autor
+## 👨‍💻 Autor
 
-**Sebastian Ballen C**
-Frontend Developer – Fullstack Enthusiast
-[LinkedIn](https://www.linkedin.com/in/sebastianballencastaneda-softwaredeveloper) · sebastian.ballenc@gmail.com
+**Sebastian Ballen C** - *Frontend Developer*
+
+* LinkedIn: [Sebastian B.](https://www.linkedin.com/in/sebastianballencastaneda-softwaredeveloper)
+* Email: sebastian.ballenc@gmail.com
 
 ---
 
-## Licencia
+## 📄 Licencia
 
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está licenciado bajo la Licencia MIT - vea el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
 
