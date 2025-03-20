@@ -1,5 +1,10 @@
+import ProtectedRoute from '@/components/ProtectedRoute';
 import TiposClient from "@/components/Tipos/TiposClient";
 
 export default function TiposPage() {
-  return <TiposClient />;
+  return (
+    <ProtectedRoute>
+      <TiposClient />
+    </ProtectedRoute>
+  );
 }

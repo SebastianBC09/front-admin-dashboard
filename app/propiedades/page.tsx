@@ -1,5 +1,10 @@
+import ProtectedRoute from '@/components/ProtectedRoute';
 import PropiedadesClient from '@/components/Properties/PropiedadesClient';
 
 export default function PropiedadesPage() {
-  return <PropiedadesClient />;
+  return (
+    <ProtectedRoute>
+      <PropiedadesClient />
+    </ProtectedRoute>
+  );
 }
