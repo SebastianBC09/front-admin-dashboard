@@ -1,8 +1,3 @@
-export interface TypeProperty {
-  typeId: string;
-  propertyId: string;
-}
-
 export interface TypeData {
   id: string;
   name: string;
@@ -10,6 +5,10 @@ export interface TypeData {
   createdAt: string;
   updatedAt: string;
   properties: TypeProperty[];
+}
+export interface TypeProperty {
+  typeId: string;
+  propertyId: string;
 }
 
 export interface GetTypesResponse {
@@ -24,7 +23,7 @@ export interface PropertyData {
   updatedAt: string;
 }
 
-export type Property = Omit<PropertyData, 'createdAt' | 'updatedAt' >
+export type Property = Pick<PropertyData, 'id' | 'name' | 'type' >
 
 export interface GetPropertiesResponse {
   properties: PropertyData[];
