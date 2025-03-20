@@ -34,6 +34,7 @@ import Wrapper from '../layout/Wrapper';
 import { useTipos } from '@/hooks/Tipos/useTipos';
 import { useTiposActions } from '@/hooks/Tipos/useTiposActions';
 import { TypeData } from '@/interfaces/types';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const formatDate = (isoDate: string): string => {
   const date = new Date(isoDate);
@@ -66,7 +67,7 @@ const TiposClient: React.FC = () => {
     confirmDelete,
     cancelDelete,
   } = useTiposActions();
-
+  const { user } = useAuthStore();
 
   return (
     <Wrapper maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
@@ -77,18 +78,20 @@ const TiposClient: React.FC = () => {
             Tipos
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          sx={{
-            borderRadius: '8px',
-            boxShadow: 2,
-            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-          }}
-          onClick={handleOpenForm}
-        >
-          Nuevo Tipo
-        </Button>
+        {user?.role === 'ADMIN' && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            sx={{
+              borderRadius: '8px',
+              boxShadow: 2,
+              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+            }}
+            onClick={handleOpenForm}
+          >
+            Nuevo Tipo
+          </Button>
+        )}
       </Box>
       <Paper sx={{ mb: 3, p: 2, borderRadius: 2 }}>
         <TextField
@@ -173,18 +176,22 @@ const TiposClient: React.FC = () => {
                           </Typography>
                         </TableCell>
                         <TableCell align="right">
-                          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-                            <Tooltip title="Editar">
-                              <IconButton color="primary">
-                                <EditIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Eliminar">
-                              <IconButton onClick={() => requestDelete(tipo.id)} color="error">
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          </Box>
+                          {user?.role === 'ADMIN' ? (
+                            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                              <Tooltip title="Editar">
+                                <IconButton color="primary">
+                                  <EditIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Eliminar">
+                                <IconButton onClick={() => requestDelete(tipo.id)} color="error">
+                                  <DeleteIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                            </Box>
+                          ) : (
+                            <Typography variant="body2" color="text.secondary">Solo lectura</Typography>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))

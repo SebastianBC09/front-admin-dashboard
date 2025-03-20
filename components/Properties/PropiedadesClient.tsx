@@ -33,6 +33,7 @@ import Wrapper from '../layout/Wrapper';
 import { usePropiedadesActions } from '@/hooks/Properties/usePropiedadesActions';
 import { usePropiedades } from '@/hooks/Properties/usePropiedades';
 import { PropertyData } from '@/interfaces/types';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const formatDate = (isoDate: string): string => {
   const date = new Date(isoDate);
@@ -65,6 +66,7 @@ const PropiedadesClient: React.FC = () => {
     confirmDelete,
     cancelDelete,
   } = usePropiedadesActions();
+  const { user } = useAuthStore();
 
   return (
     <Wrapper maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
@@ -75,18 +77,20 @@ const PropiedadesClient: React.FC = () => {
             Propiedades
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleOpenForm}
-          sx={{
-            borderRadius: '8px',
-            boxShadow: 2,
-            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-          }}
-        >
-          Nueva Propiedad
-        </Button>
+        {user?.role === 'ADMIN' && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={handleOpenForm}
+            sx={{
+              borderRadius: '8px',
+              boxShadow: 2,
+              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+            }}
+          >
+            Nueva Propiedad
+          </Button>
+        )}
       </Box>
       <Paper sx={{ mb: 3, p: 2, borderRadius: 2 }}>
         <TextField
@@ -154,16 +158,22 @@ const PropiedadesClient: React.FC = () => {
                           </Typography>
                         </TableCell>
                         <TableCell align="right">
-                          <Tooltip title="Editar">
-                            <IconButton color="primary">
-                              <EditIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="Eliminar">
-                            <IconButton onClick={() => requestDelete(propiedad.id)} color="error">
-                              <DeleteIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
+                          {user?.role === 'ADMIN' ? (
+                            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                              <Tooltip title="Editar">
+                                <IconButton color="primary">
+                                  <EditIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Eliminar">
+                                <IconButton onClick={() => requestDelete(propiedad.id)} color="error">
+                                  <DeleteIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                            </Box>
+                          ) : (
+                            <Typography variant="body2" color="text.secondary">Solo lectura</Typography>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))
